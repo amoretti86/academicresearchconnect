@@ -22,23 +22,27 @@ export default function AuthPage() {
   }, [user, setLocation]);
 
   return (
-    <div className="min-h-screen grid md:grid-cols-2">
-      {/* Hero Section */}
-      <div className="hidden md:flex flex-col justify-center p-10 bg-primary text-primary-foreground">
-        <div className="max-w-xl">
-          <h1 className="text-4xl font-bold mb-4">
-            AUC Research Connect
-          </h1>
-          <p className="text-lg mb-6">
-            Connect with research opportunities across Spelman, Morehouse, and Clark Atlanta University.
-            Join a community of scholars and make your mark in academia.
-          </p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center relative">
+      {/* Background with overlay */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ backgroundImage: 'url("/auth-bg.webp")' }}
+      >
+        <div className="absolute inset-0 bg-black/50" />
       </div>
 
-      {/* Auth Forms */}
-      <div className="flex items-center justify-center p-6">
-        <Card className="w-full max-w-md">
+      {/* Content */}
+      <div className="relative w-full max-w-md mx-4">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-white mb-4">
+            AUC Research Connect
+          </h1>
+          <p className="text-lg text-white/80">
+            Connect with research opportunities across Spelman, Morehouse, and Clark Atlanta University
+          </p>
+        </div>
+
+        <Card>
           <CardContent className="pt-6">
             <Tabs defaultValue="login">
               <TabsList className="grid w-full grid-cols-2">
