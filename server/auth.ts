@@ -49,21 +49,28 @@ export function setupAuth(app: Express) {
         passwordField: "password",
       },
       async (email, password, done) => {
-        const user = await storage.getUserByEmail(email);
-        if (!user || !(await comparePasswords(password, user.password))) {
-          return done(null, false);
-        } else if (!user.isVerified) {
-          return done(null, false, { message: "Please verify your email first" });
+        try {
+          const user = await storage.getUserByEmail(email);
+          if (!user || !(await comparePasswords(password, user.password))) {
+            return done(null, false, { message: "Invalid email or password" });
+          }
+          return done(null, user);
+        } catch (error) {
+          return done(error);
         }
-        return done(null, user);
       }
     )
   );
 
   passport.serializeUser((user, done) => done(null, user.id));
   passport.deserializeUser(async (id: number, done) => {
-    const user = await storage.getUser(id);
-    done(null, user);
+    try {
+      const user = await storage.getUser(id);
+      if (!user) return done(null, false);
+      done(null, user);
+    } catch (error) {
+      done(error);
+    }
   });
 
   app.post("/api/register", async (req, res, next) => {
@@ -75,14 +82,11 @@ export function setupAuth(app: Express) {
         return res.status(400).send("Email already registered");
       }
 
+      const hashedPassword = await hashPassword(userData.password);
       const user = await storage.createUser({
         ...userData,
-        password: await hashPassword(userData.password),
+        password: hashedPassword,
       });
-
-      // TODO: Send verification email
-      // For now, auto-verify
-      await storage.verifyUser(user.email);
 
       req.login(user, (err) => {
         if (err) return next(err);
@@ -98,9 +102,9 @@ export function setupAuth(app: Express) {
   });
 
   app.post("/api/login", (req, res, next) => {
-    passport.authenticate("local", (err, user, info) => {
+    passport.authenticate("local", (err: any, user: any, info: any) => {
       if (err) return next(err);
-      if (!user) return res.status(401).json(info);
+      if (!user) return res.status(401).json({ message: info?.message || "Authentication failed" });
 
       req.login(user, (err) => {
         if (err) return next(err);
