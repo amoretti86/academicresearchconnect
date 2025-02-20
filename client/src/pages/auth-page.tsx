@@ -26,7 +26,7 @@ export default function AuthPage() {
       {/* Background with overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url("/auth-bg.webp")' }}
+        style={{ backgroundImage: 'url("/timbuktu.webp")' }}
       >
         <div className="absolute inset-0 bg-black/50" />
       </div>
