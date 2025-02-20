@@ -35,7 +35,7 @@ export default function AuthPage() {
           <div 
             className="aspect-video rounded-lg overflow-hidden bg-cover bg-center"
             style={{
-              backgroundImage: 'url(https://images.unsplash.com/photo-1576670159375-8beb7c963ead)'
+              backgroundImage: 'url(https://www.spelman.edu/images/default-source/news-photos/19-02-06-8558-resize.jpg)'
             }}
           />
         </div>
