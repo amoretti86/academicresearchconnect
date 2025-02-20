@@ -5,6 +5,30 @@ import { InsertUser, User, Project, ProjectInterest } from "@shared/schema";
 
 const MemoryStore = createMemoryStore(session);
 
+// Create some sample projects
+const sampleProjects: Omit<Project, "id" | "createdAt">[] = [
+  {
+    title: "AI in Healthcare Research",
+    description: "Research project exploring applications of machine learning in diagnostic medicine.",
+    department: "Computer Science",
+    school: "spelman",
+    skills: ["Python", "Machine Learning", "Healthcare"],
+    timeCommitment: "10 hours per week",
+    compensationType: "paid",
+    professorId: 1,
+  },
+  {
+    title: "Quantum Computing Foundations",
+    description: "Theoretical research in quantum computing algorithms and their applications.",
+    department: "Physics",
+    school: "morehouse",
+    skills: ["Quantum Mechanics", "Linear Algebra", "Programming"],
+    timeCommitment: "15 hours per week",
+    compensationType: "course_credit",
+    professorId: 1,
+  }
+];
+
 export class MemStorage implements IStorage {
   private users: Map<number, User>;
   private projects: Map<number, Project>;
@@ -19,6 +43,31 @@ export class MemStorage implements IStorage {
     this.currentId = 1;
     this.sessionStore = new MemoryStore({
       checkPeriod: 86400000,
+    });
+
+    // Add sample professor
+    const professorId = this.currentId++;
+    this.users.set(professorId, {
+      id: professorId,
+      email: "prof@spelman.edu",
+      username: "professor",
+      password: "hashed_password",
+      role: "professor",
+      school: "spelman",
+      isVerified: true,
+      verificationToken: null,
+      department: "Computer Science",
+      cvPath: null,
+    });
+
+    // Add sample projects
+    sampleProjects.forEach(project => {
+      const id = this.currentId++;
+      this.projects.set(id, {
+        ...project,
+        id,
+        createdAt: new Date(Date.now() - Math.random() * 1000 * 60 * 60 * 24 * 7), // Random date within last week
+      });
     });
   }
 
@@ -40,7 +89,13 @@ export class MemStorage implements IStorage {
 
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = this.currentId++;
-    const user: User = { ...insertUser, id, isVerified: false };
+    const user: User = {
+      ...insertUser,
+      id,
+      isVerified: false,
+      verificationToken: null,
+      cvPath: null,
+    };
     this.users.set(id, user);
     return user;
   }
@@ -80,7 +135,7 @@ export class MemStorage implements IStorage {
       );
     }
 
-    return projects;
+    return projects.sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
   }
 
   async createProject(project: Omit<Project, "id" | "createdAt">): Promise<Project> {
