@@ -8,20 +8,22 @@ import { Loader2 } from "lucide-react";
 
 export default function Dashboard() {
   const [search, setSearch] = useState("");
-  const [department, setDepartment] = useState("");
-  const [school, setSchool] = useState("");
+  const [department, setDepartment] = useState("all");
+  const [school, setSchool] = useState("all");
 
   const { data: projects, isLoading } = useQuery<Project[]>({
     queryKey: [
       "/api/projects",
-      { department, school, search }
+      { department: department === "all" ? "" : department, 
+        school: school === "all" ? "" : school, 
+        search }
     ],
   });
 
   return (
     <div className="min-h-screen bg-background">
       <NavHeader />
-      
+
       <main className="container mx-auto px-4 py-8">
         <div className="grid md:grid-cols-[300px,1fr] gap-6">
           <aside>

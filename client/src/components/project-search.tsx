@@ -23,7 +23,7 @@ export function ProjectSearch({
   return (
     <div className="p-4 bg-card rounded-lg border space-y-4">
       <h2 className="font-semibold">Search Projects</h2>
-      
+
       <div className="relative">
         <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
         <Input
@@ -41,7 +41,7 @@ export function ProjectSearch({
             <SelectValue placeholder="All Departments" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Departments</SelectItem>
+            <SelectItem value="all">All Departments</SelectItem>
             <SelectItem value="Computer Science">Computer Science</SelectItem>
             <SelectItem value="Biology">Biology</SelectItem>
             <SelectItem value="Chemistry">Chemistry</SelectItem>
@@ -58,7 +58,7 @@ export function ProjectSearch({
             <SelectValue placeholder="All Schools" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="">All Schools</SelectItem>
+            <SelectItem value="all">All Schools</SelectItem>
             <SelectItem value="spelman">Spelman College</SelectItem>
             <SelectItem value="morehouse">Morehouse College</SelectItem>
             <SelectItem value="cau">Clark Atlanta University</SelectItem>
