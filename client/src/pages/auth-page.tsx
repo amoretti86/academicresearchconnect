@@ -32,21 +32,6 @@ export default function AuthPage() {
             Connect with research opportunities across Spelman, Morehouse, and Clark Atlanta University.
             Join a community of scholars and make your mark in academia.
           </p>
-          <div 
-            className="aspect-video rounded-lg overflow-hidden bg-cover bg-center bg-primary/10"
-            style={{
-              backgroundImage: 'url(https://spelman.edu/images/default-source/admission/19-02-06-8558-resize.jpg)',
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-            }}
-          >
-            {/* Fallback content if image fails to load */}
-            <div className="w-full h-full flex items-center justify-center">
-              <div className="text-primary/50 text-center p-4">
-                Connecting AUC Students with Research Opportunities
-              </div>
-            </div>
-          </div>
         </div>
       </div>
 
