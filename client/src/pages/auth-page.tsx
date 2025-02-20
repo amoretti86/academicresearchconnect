@@ -1,3 +1,4 @@
+import timbuktuImg from "@/assets/timbuktu.webp";
 import { useAuth } from "@/hooks/use-auth";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -26,7 +27,7 @@ export default function AuthPage() {
       {/* Background with overlay */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-        style={{ backgroundImage: 'url("/timbuktu.webp")' }}
+        style={{ backgroundImage: `url(${timbuktuImg})` }}
       >
         <div className="absolute inset-0 bg-black/50" />
       </div>
