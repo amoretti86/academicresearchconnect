@@ -69,17 +69,15 @@ export function setupAuth(app: Express) {
   app.post("/api/register", async (req, res, next) => {
     try {
       const userData = insertUserSchema.parse(req.body);
-      
+
       const existingUser = await storage.getUserByEmail(userData.email);
       if (existingUser) {
         return res.status(400).send("Email already registered");
       }
 
-      const verificationToken = randomBytes(32).toString("hex");
       const user = await storage.createUser({
         ...userData,
         password: await hashPassword(userData.password),
-        verificationToken,
       });
 
       // TODO: Send verification email
@@ -103,7 +101,7 @@ export function setupAuth(app: Express) {
     passport.authenticate("local", (err, user, info) => {
       if (err) return next(err);
       if (!user) return res.status(401).json(info);
-      
+
       req.login(user, (err) => {
         if (err) return next(err);
         res.json(user);
