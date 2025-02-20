@@ -97,10 +97,10 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </div>
         </div>
       </CardHeader>
-      
+
       <CardContent className="space-y-4">
         <p className="text-sm">{project.description}</p>
-        
+
         <div className="space-y-2">
           <h4 className="text-sm font-medium">Required Skills:</h4>
           <div className="flex flex-wrap gap-2">
