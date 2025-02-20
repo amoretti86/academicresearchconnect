@@ -100,6 +100,7 @@ export class MemStorage implements IStorage {
       ...interest,
       id,
       createdAt: new Date(),
+      message: interest.message || null,
     };
     this.projectInterests.set(id, newInterest);
     return newInterest;
